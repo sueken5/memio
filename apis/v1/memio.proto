@@ -1,0 +1,16 @@
+syntax = "proto3";
+package apis.v1;
+
+option go_package = "apis";
+
+service Memio {
+    rpc Echo (EchoRequest) returns (EchoResponse) {}
+}
+
+message EchoRequest {
+    string name = 1;
+}
+
+message EchoResponse {
+    string text = 1;
+}

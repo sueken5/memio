@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  web:
+    image: node:13.6.0-buster
+    working_dir: /memio/web
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/memio
+    command: yarn start
+
+  gateway:
+    build: containers/envoy
+    volumes:
+      - ./gateway/envoy:/etc/envoy/:cached
+    command: /usr/local/bin/envoy --config-path /etc/envoy/envoy.yaml
+    ports:
+    - 8000:8000
+    - 8080:8080
+
+  server:
+    image: golang:1.13.6-buster
+    working_dir: /go/src/github.com/sueken5/memio/server
+    volumes:
+      - ./:/go/src/github.com/sueken5/memio:cached
+    command: go run cmd/server/main.go
+
+#  protoc:
+#    build:
+#      context: ./containers/protoc
+#    working_dir: /work
+#    volumes:
+#      - ./:/work:cached
+#

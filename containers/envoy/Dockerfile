@@ -1,0 +1,3 @@
+FROM envoyproxy/envoy:v1.12.2
+EXPOSE 8080
+EXPOSE 8000
